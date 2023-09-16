@@ -36,14 +36,15 @@ class Simulation:
             self.screen.fill("black")
 
             for agent in self.agents:
-                agent.draw()
                 agent.move()
+                agent.draw()
 
             pygame.display.flip()
 
             self.clock.tick(self.simulation_speed)
 
-    pygame.quit()
+
+        pygame.quit()
 
 
 class Agent:
@@ -60,6 +61,9 @@ class Agent:
         self.screen = simulation.get_screen()
         self.grid_size = simulation.get_gird_size()
 
+        self.last_x = int
+        self.last_y = int
+
     def right(self):
         return 1, 0
 
@@ -72,16 +76,27 @@ class Agent:
     def down(self):
         return 0, 1
 
+    def sense(self):
+        pass
+
     def rotate(self):
         pass
 
     def move(self):
+        self.last_x = self.location[0]
+        self.last_y = self.location[1]
+
         self.location[0] += self.down()[0]
         self.location[1] += self.down()[1]
 
     def draw(self):
         pygame.draw.rect(self.screen, (255, 255, 255), (
             self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size,
+            self.grid_size,
+            self.grid_size))
+
+        pygame.draw.rect(self.screen, (122, 122, 122), (
+            self.last_x * self.grid_size + self.grid_size, self.last_y * self.grid_size + self.grid_size,
             self.grid_size,
             self.grid_size))
 
@@ -102,7 +117,7 @@ class Particle(Agent):
 
 if __name__ == "__main__":
     print("running")
-    sim = Simulation(1000, 1000, 60, 10)
+    sim = Simulation(1000, 1000, 5, 10)
     particle_alpha = Particle(
         simulation=sim,
         heading_angle=None,
