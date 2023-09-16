@@ -37,6 +37,7 @@ class Simulation:
 
             for agent in self.agents:
                 agent.draw()
+                agent.move()
 
             pygame.display.flip()
 
@@ -59,23 +60,24 @@ class Agent:
         self.screen = simulation.get_screen()
         self.grid_size = simulation.get_gird_size()
 
-    def up(self):
+    def right(self):
         return 1, 0
 
-    def down(self):
+    def left(self):
         return -1, 0
 
-    def left(self):
+    def up(self):
         return 0, -1
 
-    def right(self):
+    def down(self):
         return 0, 1
 
     def rotate(self):
         pass
 
     def move(self):
-        pass
+        self.location[0] += self.down()[0]
+        self.location[1] += self.down()[1]
 
     def draw(self):
         pygame.draw.rect(self.screen, (255, 255, 255), (
@@ -107,7 +109,7 @@ if __name__ == "__main__":
         sensor_angle=None,
         sensor_distance=None,
         sensors=None,
-        location=(50, 50)
+        location=[50, 50]
     )
 
     sim.run()
