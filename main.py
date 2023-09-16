@@ -43,7 +43,6 @@ class Simulation:
 
             self.clock.tick(self.simulation_speed)
 
-
         pygame.quit()
 
 
@@ -65,16 +64,28 @@ class Agent:
         self.last_y = int
 
     def right(self):
-        return 1, 0
+        self.heading_direction = [1, 0]
 
     def left(self):
-        return -1, 0
+        self.heading_direction = [-1, 0]
 
     def up(self):
-        return 0, -1
+        self.heading_direction = [0, -1]
 
     def down(self):
-        return 0, 1
+        self.heading_direction = [0, 1]
+
+    def top_right(self):
+        self.heading_direction = [1, -1]
+
+    def top_left(self):
+        self.heading_direction = [-1, -1]
+
+    def down_right(self):
+        self.heading_direction = [-1, 1]
+
+    def down_left(self):
+        self.heading_direction = [1, 1]
 
     def sense(self):
         pass
@@ -86,8 +97,10 @@ class Agent:
         self.last_x = self.location[0]
         self.last_y = self.location[1]
 
-        self.location[0] += self.down()[0]
-        self.location[1] += self.down()[1]
+        self.down_left()
+
+        self.location[0] += self.heading_direction[0]
+        self.location[1] += self.heading_direction[1]
 
     def draw(self):
         pygame.draw.rect(self.screen, (255, 255, 255), (
@@ -120,7 +133,7 @@ if __name__ == "__main__":
     sim = Simulation(1000, 1000, 5, 10)
     particle_alpha = Particle(
         simulation=sim,
-        heading_angle=None,
+        heading_angle=[-1, 0],
         sensor_angle=None,
         sensor_distance=None,
         sensors=None,
