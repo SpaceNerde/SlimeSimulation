@@ -36,8 +36,8 @@ class Simulation:
             self.screen.fill("black")
 
             for agent in self.agents:
+                agent.sense()
                 agent.move()
-                agent.draw()
 
             pygame.display.flip()
 
@@ -88,7 +88,11 @@ class Agent:
         self.heading_direction = [1, 1]
 
     def sense(self):
-        pass
+        print(self.screen.get_at(
+            (self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size)))
+
+        if self.screen.get_at((self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size)) == (255, 255, 255):
+            print("white")
 
     def rotate(self):
         pass
@@ -102,7 +106,6 @@ class Agent:
         self.location[0] += self.heading_direction[0]
         self.location[1] += self.heading_direction[1]
 
-    def draw(self):
         pygame.draw.rect(self.screen, (255, 255, 255), (
             self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size,
             self.grid_size,
@@ -112,6 +115,7 @@ class Agent:
             self.last_x * self.grid_size + self.grid_size, self.last_y * self.grid_size + self.grid_size,
             self.grid_size,
             self.grid_size))
+
 
 
 class Particle(Agent):
@@ -139,5 +143,6 @@ if __name__ == "__main__":
         sensors=None,
         location=[50, 50]
     )
+
 
     sim.run()
