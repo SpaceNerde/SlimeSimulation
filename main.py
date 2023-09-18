@@ -91,7 +91,8 @@ class Agent:
         print(self.screen.get_at(
             (self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size)))
 
-        if self.screen.get_at((self.location[0] * self.grid_size + self.grid_size, self.location[1] * self.grid_size + self.grid_size)) == (255, 255, 255):
+        if self.screen.get_at((self.location[0] * self.grid_size + self.grid_size,
+                               self.location[1] * self.grid_size + self.grid_size)) == (255, 255, 255):
             print("white")
 
     def rotate(self):
@@ -115,7 +116,6 @@ class Agent:
             self.last_x * self.grid_size + self.grid_size, self.last_y * self.grid_size + self.grid_size,
             self.grid_size,
             self.grid_size))
-
 
 
 class Particle(Agent):
@@ -143,6 +143,5 @@ if __name__ == "__main__":
         sensors=None,
         location=[50, 50]
     )
-
 
     sim.run()
